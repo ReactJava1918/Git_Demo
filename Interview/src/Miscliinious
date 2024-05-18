@@ -1,0 +1,115 @@
+Static Binding and Dynamic Binding
+====================================
+static binding refers to method overloading,Dynamic Binding Refers to Method overding
+
+
+
+wait() Vs sleep() method in Java.
+=====================================
+wait() is a instance method present in object class
+we have to use wait() only in sychronized Block
+it blocks current execution
+
+sleep() is a static method present in Thread class
+Thred,sleep can be used anywhere in program
+it pause for sometime
+
+=================================================
+Collection Vs Collections in Java.
+
+
+In summary, Collection is an interface representing a group of objects, and Collections is a utility class providing 
+static methods to perform operations on collections, especially those implementing the List interface
+
+
+================================
+Access Vs Non-access modifiers in Java
+public------can be accessed any where
+protected----can be accessed any where  with sub classess irrespestive of pacakges 
+default-----can be acessed with in the same pacakege only
+private--can't be acessed out side
+===========================
+notify() Vs notifyAll() in Java
+notify()----notify() means it will invoke only single thread
+notifyAll()----it will all number of waiting threads
+==================================
+BLOCKED Vs WAITING states in Java
+
+Blocked--> when on thread is executing remaing threads will be in startvation state , this is said to be blocked state
+waiting state--.>when you apply wait() , then lock will realse, this will keep current thread to  wait for some time
+===================================
+throw Vs throws Vs Throwable In Java
+In summary, throw is used to throw an exception explicitly, throws is used in method declarations to indicate potential exceptions that a
+ method may throw, and Throwable is the base class for all exceptions and errors in Java.
+===============================
+Program Vs Process Vs Threads
+A program can be loaded into memory and executed as one or more processes. Each process can have multiple 
+threads running concurrently, performing different tasks within the process.
+==================================
+User threads Vs Daemon threads in Java
+User threads are regular threads that prevent the JVM from exiting until they have completed.
+Daemon threads are background threads that do not prevent the JVM from exiting when all user threads have completed. 
+They are typically used for tasks that can be safely terminated when the application is shutting down
+=====================================
+Dimond Problem
+In java 8 both intefaces and abstarct calss have same functionailtey , but when it comes it mutiple interfcaes implementing interfcaes take advantage than abstarct 
+clasesss
+if mutiple interfaces with default methods implemented to a class then there will be chance of getting amibiguty and dimond problem 
+========================
+when to use abstract class and when to use interface
+====================================================
+Before java 7 interface should only have abstact methods, no constructors, no instance variables,
+when it comes to abstract clasess it can have both abstract and implemented methods,instance variables, constructos ans all
+But the problem is we can use only abstarct class
+In case interfcaes it is not like that , we can you use any number of interfaces in inhertience
+====================================================
+differnce between abstarct class and java 8 interfaces
+
+In java 8 both intefaces and abstarct calss have same functionailtey , but when it comes it mutiple interfcaes implementing interfcaes take advantage than abstarct 
+clasesss
+
+why java is not completely object oriented
+==============================================
+Java is not completely object oriented because due to following reasons
+1)primitive datatypes
+2)lamda expressions
+3)java does not support metiple inhertince
+=============================================
+
+what do you mean by method hiding and data hiding
+
+Data Hiding:- Data Hiding is nothing but encapsulation
+method hiding is nothing but parent and child clases  having same static methods
+============================================
+if my main method don't have strings args is that okay
+
+yes
+==========================================================
+copy constructors :-
+
+Definition:
+A copy constructor is a special type of constructor in Java used to create a new object by copying the properties 
+of an existing object of the same class.
+
+public class MyClass {
+    // ...
+
+    // Copy constructor
+    public MyClass(MyClass other) {
+        // Initialize new object using 'other' object's properties
+    }
+
+    // Other constructors and methods...
+}
+
+
+It was usefull for 
+--deepclonning
+--customlogic copy
+
+
+
+
+
+======================================================
+

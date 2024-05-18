@@ -1,0 +1,38 @@
+In Java 8, the Java Virtual Machine (JVM) architecture consists of several key components that work together to execute Java applications. Here's an overview of the main components:
+
+1. **Class Loader Subsystem:**
+   - **Bootstrap Class Loader:** Loads core Java libraries located in the `jre/lib` directory.
+   - **Extension Class Loader:** Loads classes from the `jre/lib/ext` directory.
+   - **Application Class Loader:** Loads classes from the classpath specified by the `java.class.path` system property.
+
+2. **Runtime Data Areas:**
+   - **Method Area:** Stores class structures, method and field data, and static variables.
+   - **Heap:** Memory area shared among all threads, used for object storage.
+   - **Java Stack:** Each thread has its own Java Stack, storing method-specific data, local variables, and partial results.
+   - **PC Registers:** Holds the address of the currently executing Java Virtual Machine instruction.
+   - **Native Method Stack:** Stores native method information.
+
+3. **Execution Engine:**
+   - **Interpreter:** Reads and executes bytecode line by line.
+   - **Just-In-Time (JIT) Compiler:** Translates frequently executed bytecode into native machine code for improved performance.
+   - **Garbage Collector:** Manages memory by reclaiming memory occupied by objects that are no longer in use.
+
+4. **Native Interface:**
+   - Enables Java applications to interact with native libraries and components written in languages like C and C++.
+
+5. **Java Native Interface (JNI):**
+   - Provides a standard interface for Java applications to interact with native code.
+
+6. **Direct Memory Access:**
+   - Enables Java applications to access native memory directly.
+
+### Summary:
+
+- **Class Loader Subsystem** is responsible for loading classes.
+- **Runtime Data Areas** manage memory, stacks, and registers for each thread.
+- **Execution Engine** interprets bytecode and may use a JIT compiler for optimization.
+- **Native Interface** allows interaction with native libraries.
+- **Java Native Interface (JNI)** provides a standard interface for native code integration.
+- **Direct Memory Access** allows Java applications to work with native memory.
+
+This architecture provides the foundation for running Java applications by managing memory, executing bytecode, and facilitating interactions with native code. Keep in mind that Java's architecture may have evolved in more recent Java versions, so it's always a good idea to refer to the documentation corresponding to the specific Java version you are working with.

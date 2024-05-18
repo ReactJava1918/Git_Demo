@@ -1,0 +1,3 @@
+In modern Java development, with the availability of higher-level 
+concurrency constructs, explicit use of yield is less common, and it's often preferable to 
+use more robust synchronization mechanisms for coordinating between threads.

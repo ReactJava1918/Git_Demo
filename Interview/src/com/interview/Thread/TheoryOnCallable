@@ -1,0 +1,33 @@
+Certainly! Here are some interview questions related to the `Callable` interface in Java:
+
+1. **What is the `Callable` interface in Java?**
+   - A: `Callable` is a functional interface introduced in Java 5, located in the `java.util.concurrent` package. It is similar to `Runnable` but can return a result and throw checked exceptions.
+
+2. **How is `Callable` different from `Runnable`?**
+   - A: `Runnable` is used for tasks that don't return a result or throw checked exceptions, while `Callable` is used for tasks that return a result and can throw checked exceptions.
+
+3. **Why was the `Callable` interface introduced?**
+   - A: The `Callable` interface was introduced to provide a way for tasks submitted to an `ExecutorService` to return values or throw exceptions. This allows better handling of asynchronous computations.
+
+4. **How do you use the `Callable` interface with the `ExecutorService` framework?**
+   - A: You can submit a `Callable` task to an `ExecutorService` using the `submit` method, which returns a `Future` object representing the result of the computation.
+
+5. **Can a `Callable` task be used with the `execute` method of `ExecutorService`?**
+   - A: No, the `execute` method of `ExecutorService` is specifically designed for tasks that implement the `Runnable` interface. To use a `Callable` task, you should use the `submit` method.
+
+6. **What is the purpose of the `call` method in the `Callable` interface?**
+   - A: The `call` method in the `Callable` interface represents the task that will be executed asynchronously. It returns a result and can throw checked exceptions.
+
+7. **How can you handle exceptions thrown by a `Callable` task?**
+   - A: The exceptions thrown by a `Callable` task can be handled by catching `ExecutionException` when calling the `get` method on the `Future` object returned by the `submit` method.
+
+8. **Explain the difference between `Runnable` and `Callable` in terms of the return value.**
+   - A: `Runnable` tasks don't return a value, whereas `Callable` tasks return a value. The `call` method in `Callable` is responsible for returning the result.
+
+9. **Can you submit multiple `Callable` tasks to an `ExecutorService` and retrieve their results?**
+   - A: Yes, you can submit multiple `Callable` tasks to an `ExecutorService` using the `invokeAll` method, which returns a list of `Future` objects. You can then retrieve the results by calling `get` on each `Future`.
+
+10. **How does the `Future` interface relate to the `Callable` interface?**
+    - A: The `Future` interface is used to represent the result of an asynchronous computation. When you submit a `Callable` task to an `ExecutorService`, it returns a `Future` object that you can use to retrieve the result or check for completion.
+
+These questions cover various aspects of the `Callable` interface in Java, including its purpose, usage with `ExecutorService`, and handling of results and exceptions.

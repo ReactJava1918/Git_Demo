@@ -1,0 +1,413 @@
+Hibernate:--
+============
+Generators:-
+  1)Identity:-It is unique to table one, This is not shareble to across all tables in db
+  2)Sqeuence:-It is not unique,this can be sharable to accross all tables in db ,we can have seprate sequences for each table or , 
+   we can have one sequence for one table
+  3)Auto:-hibernates takes best generator from the data base supported generators
+  4)Table:-In table generator , global hibernate_sequence table will be crated , for the all the primarey key will be given by this table only 
+
+Note:-Don't go with auto ,it may create problems to some dbs
+
+Your understanding of generators is mostly correct. Let me clarify and correct a few points:
+
+1. **Identity:**
+   - Identity generators are typically used in databases to automatically generate unique primary key values for a specific table.
+   - These identities are unique within a single table but are not shared across tables in the database.
+   - Each table with an identity generator will have its own set of unique values for its primary key column.
+
+2. **Sequence:**
+   - Sequence generators provide a way to generate a series of values that can be shared across multiple tables.
+   - You can have separate sequences for each table or use a single sequence for multiple tables, depending on your database design.
+   - Sequence values are not guaranteed to be unique across tables, so it's essential to manage them properly.
+
+3. **Auto:**
+   - The "auto" generator, often used in Hibernate and other ORM (Object-Relational Mapping) frameworks, allows the framework to choose the best generator based on the database's supported generators.
+   - It automatically adapts to the database system to ensure proper primary key generation.
+
+4. **Table:**
+   - In the table generator, a global table (often named "hibernate_sequence") is created to manage primary key generation.
+   - All primary keys for various tables are obtained from this shared table.
+   - Each time a new row is inserted into a table, the generator retrieves the next unique value from the "hibernate_sequence" table.
+
+So, in summary, identity generators provide unique values for each table, sequence generators can be shared among tables, auto generators adapt to the database, and table generators use a shared table to manage primary keys. Your understanding is mostly accurate with these clarifications.
+
+
+@Column
+=======
+--@Column annottaion used to map properties and columns in db
+--we can specifey unique in annotation level, itself. if you unquie at column level , then should not  extend more than 1000 bytes
+@Temporal:-
+==========
+---To Custamize date,Making sure to support date with data base date
+@Transient
+========
+--Do Nothing, Means if  you add  @Transient annotation on any property it will not be response
+--if you add transient on column level ,this coulmn won't be created in db
+
+Persiest()
+============
+--The return type is void
+--When you are performing persist , then untill unless transction  was commited  insertion won't happen to db. 
+   it will keep records in cache.So as results numbers of db calls will be reduced
+---In the same session if you change anything on the persisted object , those will be updated in cache , and after trnsation commit they will be
+  saved in to db
+
+More about persistent Method:-
+================================
+Your understanding of the `persist` method in the context of JPA (Java Persistence API) and Hibernate is mostly correct. Let me confirm and provide a bit more detail:
+
+1. **Return Type**: Correct, the `persist` method returns `void`. It doesn't return anything because its purpose is to make an entity persistent, not retrieve data from the database.
+
+2. **Transaction and Insertion**: Also correct, when you call `persist`, it schedules an entity to be inserted into the database, but the actual insertion doesn't happen immediately. Instead, it's deferred until the transaction is committed. This behavior is part of the JPA specification to ensure that all changes to the database are atomic and consistent with the transaction.
+
+3. **Caching**: Yes, `persist` does keep the entity in the persistence context cache. The persistence context is a first-level cache provided by JPA and Hibernate. This cache helps reduce the number of database calls and improves performance. Any changes made to the entity within the same persistence context (i.e., the same session) will be tracked and synchronized with the database when the transaction is committed.
+
+Here are a few additional points to consider:
+
+- **Rollback**: If a transaction is rolled back (due to an exception or explicitly), any entities scheduled for insertion using `persist` within that transaction will not be persisted to the database.
+
+- **Detached Entities**: Once a transaction is committed, the entity becomes detached from the persistence context. Further changes to a detached entity won't be automatically synchronized with the database. To persist changes made to a detached entity, you would typically use `merge()` or reattach it to a new persistence context.
+
+- **Automatic Key Generation**: If your entity uses automatic key generation (e.g., through `@GeneratedValue` with `IDENTITY` or `SEQUENCE` strategy), the actual database-generated key will be assigned to the entity during the `persist` operation.
+
+- **Entity State**: Entities can be in various states, including transient (not associated with any persistence context), managed (associated with a persistence context), and detached (previously managed but no longer associated with a persistence context). Understanding these states is crucial for working with JPA and Hibernate.
+
+In summary, the `persist` method is used to schedule an entity for insertion into the database, and the actual insertion occurs when the associated transaction is committed. The entity is also tracked in the persistence context, allowing you to make further changes to it before the transaction is committed. However, be aware of the entity's state and the lifecycle of transactions when working with JPA and Hibernate.
+
+==============================
+@Temparal
+this feature came in java 8, due to this when we try to save date in db , it will store only date(23-11-2032), it wont store date along with time stamp(21-21-2345 00:00:00)
+===============================================================================================================================================
+@Acess
+Acess is of two types
+1)feild Acess
+2)Propert Acess
+Annotationg on feilds levels is called feild acess,
+Annotating at property levels is called peroperty acess
+=========================================================================================
+Life cycle states in hibernate
+
+Transient State: Object is newly created in memory, not associated with any Hibernate session.
+Persistent State: Object is associated with a Hibernate session, managed and synchronized with the database.
+session.save()
+Detached State: Object was once associated with a session but the session is closed. It can be reattached using merge to become persistent again.
+sesion.close()
+Removed State: Object is scheduled for removal from the database, pending a commit operation.
+session.close()
+============================================================================
+persist()--wont return any thing while saving in db
+if object is in persistant state if you update any seeter method , it will move to db
+=======================================================================
+find() and getRefernce()
+find()--- when apply find() it will make db call
+getRefrence()---when we use getRefrence() call it wont make db call, it will make db call only when you are trying read values from 
+                  getter methods
+=================================================================================
+merge()
+---used to move detached object to persistant state
+---By using we don't exception having unique exception
+On Merge() , Miss xing has given excellent  article
+once go through you tube
+=======================================================
+Differnce between merge() and persit()
+
+if you apply persit() on two records wich are having same primarey key , they issue will come stating alredy primary exists
+if you apply merge() on two records wich are having same primarey key , they  no issue will come, second record will update first record
+======================================================
+remove()
+Remove() can be applied only on  managed/perstistant satte object.
+we can't apply remove() method detached and transient state
+===================================
+clear()
+ when you apply clear () , all objects in presistant state will be moved to detached state
+====================================================================================
+close()
+=========
+evict()
+=========
+
+
+
+Certainly! Let's add "clear" to the list and provide concise explanations for each:
+
+1. **Persistence:**
+   - **Definition:** Determines whether the method saves a new entity or updates an existing one.
+   - **Explanation:** Methods like `save`, `persist`, and `update` in Hibernate are used for persisting entities. They decide whether to add a new entity to the database or update an existing one.
+
+2. **Merging:**
+   - **Definition:** Explains how changes from the entity are merged with the existing database record.
+   - **Explanation:** The `merge` method synchronizes changes made to a detached entity back into the persistent context, ensuring they are reflected in the database.
+
+3. **Detached Entities:**
+   - **Definition:** Indicates what happens to entities that are removed from Hibernate's management.
+   - **Explanation:** Detached entities are no longer associated with a Hibernate session. They can be reattached using `merge` or operated on independently, and changes won't be automatically synchronized with the database.
+
+4. **Eviction:**
+   - **Definition:** Clarifies if the entity is removed from both Hibernate and the database.
+   - **Explanation:** The `evict` method removes an entity from the first-level cache of the Hibernate session, making it detached. It doesn't remove the entity from the database but prevents automatic synchronization.
+
+5. **Closing Session:**
+   - **Definition:** Describes the consequences of closing the session on ongoing operations and data.
+   - **Explanation:** Closing a session in Hibernate detaches all managed entities. Ongoing operations should be completed before closing. Entities become detached, and further changes won't be automatically synchronized with the database.
+
+6. **Flushing Data:**
+   - **Definition:** Specifies if the method forces data to be written to the database.
+   - **Explanation:** The `flush` method synchronizes the session's state with the database. It's used to force changes in the session to be written to the database before a transaction is committed.
+
+7. **Removal:**
+   - **Definition:** Explains how the entity is removed from the database (if applicable).
+   - **Explanation:** Removing an entity from the database can be done using the `delete` method. The removal is often associated with marking the entity for deletion, and the actual deletion occurs when the transaction is committed.
+
+8. **Clear:**
+   - **Definition:** Removes all entities from the first-level cache of the session.
+   - **Explanation:** The `clear` method in Hibernate removes all entities from the first-level cache of the session, effectively detaching them. It doesn't affect the database; it only clears the session's cache.
+
+Associations:-
+==================
+Association  uni-directonal    bi-directional
+One-one       yes                yes
+One-Many      yes                No
+Many-One      yes                No
+Many-Many     yes               yes
+
+Note:-Together one-many and Many-One can be made Bidirectional
+
+MappedBy
+=========
+By useing Mapped by keyword we can create bidirectional mapping in associations
+
+==============================
+CascadeTypes
+====================
+
+JPA:-
+================================
+InJPA There  we can write quires in four ways
+1)native sql
+2)Jpql
+3)cretria
+4)stored procedures
+
+
+
+
+
+
+Certainly! Below are some common use cases along with examples of how you can write JPA queries using Spring Data JPA repository methods. Note that these examples assume you have appropriate entities and relationships defined in your application.
+
+1. **Retrieve All Entities:**
+   ```java
+   List<Entity> findAll();
+   ```
+
+2. **Retrieve Entity by ID:**
+   ```java
+   Optional<Entity> findById(Long id);
+   ```
+
+3. **Retrieve Entities by a Single Property:**
+   ```java
+   List<Entity> findByPropertyName(String value);
+   ```
+
+4. **Retrieve Entities by Multiple Properties:**
+   ```java
+   List<Entity> findByProperty1AndProperty2(String value1, String value2);
+   ```
+
+5. **Retrieve Entities by Like Query:**
+   ```java
+   List<Entity> findByPropertyNameContaining(String partialValue);
+   ```
+
+6. **Retrieve Entities by Ordering:**
+   ```java
+   List<Entity> findByOrderByPropertyNameAsc();
+   ```
+
+7. **Retrieve Entities by Custom Query:**
+   ```java
+   @Query("SELECT e FROM Entity e WHERE e.propertyName = :value")
+   List<Entity> findByCustomQuery(@Param("value") String value);
+   ```
+
+8. **Retrieve Limited Number of Entities:**
+   ```java
+   List<Entity> findTop5ByOrderByTimestampDesc(); // Example for retrieving the top 5 entities based on timestamp
+   ```
+
+9. **Count Entities:**
+   ```java
+   long countByPropertyName(String value);
+   ```
+
+10. **Check if an Entity Exists:**
+    ```java
+    boolean existsByPropertyName(String value);
+    ```
+
+11. **Update Entity:**
+    ```java
+    @Modifying
+    @Query("UPDATE Entity e SET e.propertyName = :newValue WHERE e.id = :entityId")
+    void updateEntity(@Param("newValue") String newValue, @Param("entityId") Long entityId);
+    ```
+
+12. **Delete Entity by ID:**
+    ```java
+    void deleteById(Long id);
+    ```
+
+13. **Delete Entities by Property:**
+    ```java
+    void deleteByPropertyName(String value);
+    ```
+
+14. **Retrieve Entities with Eagerly Loaded Associations:**
+    ```java
+    @Query("SELECT e FROM Entity e LEFT JOIN FETCH e.associatedEntities")
+    List<Entity> findAllWithAssociations();
+    ```
+
+15. **Native Query:**
+    ```java
+    @Query(value = "SELECT * FROM entities WHERE property_name = :value", nativeQuery = true)
+    List<Entity> findByNativeQuery(@Param("value") String value);
+    ```
+
+These examples cover a variety of scenarios, and you can adapt them based on your entity structure and requirements. It's important to understand that Spring Data JPA provides a lot of flexibility in query creation, and you can use method names, query annotations, or native queries based on your needs.
+
+=================================
+Native Quires in hibernate
+
+In a native query like the one you provided, where you use `SELECT * FROM entities WHERE property_name = :value`, the result of the query is a collection of rows from the `entities` table that satisfy the condition specified in the `WHERE` clause. 
+
+When you execute this native query in a Spring Data JPA repository method, the result is typically returned as a `List<Object[]>`, where each `Object[]` represents a row in the result set. Each element in the array corresponds to a column in the selected columns of the query.
+
+If you want to map the result to an entity, you need to specify how to map the columns to the fields or properties of that entity. One way to achieve this is by using the `@SqlResultSetMapping` annotation along with `@EntityResult`:
+
+```java
+@SqlResultSetMapping(
+    name = "EntityMapping",
+    entities = @EntityResult(
+        entityClass = Entity.class,
+        fields = {
+            @FieldResult(name = "id", column = "id"),
+            @FieldResult(name = "propertyName", column = "property_name"),
+            // Map other fields as needed
+        }
+    )
+)
+```
+
+Then, you can use this mapping in your native query:
+
+```java
+@Query(
+    value = "SELECT * FROM entities WHERE property_name = :value", 
+    nativeQuery = true,
+    resultSetMapping = "EntityMapping"
+)
+List<Entity> findByNativeQuery(@Param("value") String value);
+```
+
+In this example, `EntityMapping` is a named result set mapping that defines how the columns from the native query result set should be mapped to the fields of the `Entity` class. Each `@FieldResult` annotation specifies the mapping for a particular field.
+
+Ensure that the names used in `@FieldResult` correspond to the field names in your `Entity` class. Adjust the mapping according to your entity structure and the columns selected in your native query.
+
+==================================================
+
+
+
+Nameed quires in spring data jpa
+
+
+
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import java.util.List;
+
+public interface YourEntityRepository extends JpaRepository<YourEntity, Long> {
+
+    @Query(name = "YourEntity.findByName")
+    List<YourEntity> findByName(@Param("name") String name);
+}
+
+
+
+
+
+
+
+import javax.persistence.NamedQuery;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Column;
+
+@Entity
+@NamedQuery(
+    name = "YourEntity.findByName",
+    query = "SELECT e FROM YourEntity e WHERE e.name = :name"
+)
+public class YourEntity {
+
+    @Id
+    private Long id;
+
+    @Column
+    private String name;
+
+    // Other fields and methods...
+}
+
+
+
+=====================================================================
+
+
+Certainly! If you want to create a Criteria Query using the `EntityManager` directly in Spring Data JPA, you can use the JPA `CriteriaBuilder` and `CriteriaQuery` to dynamically build queries. Below is an example:
+
+```java
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
+public class EntityService {
+
+    private final EntityManager entityManager;
+
+    public EntityService(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    public List<Entity> findEntitiesByPropertyValue(String value) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Entity> criteriaQuery = criteriaBuilder.createQuery(Entity.class);
+
+        Root<Entity> root = criteriaQuery.from(Entity.class);
+        Predicate predicate = criteriaBuilder.equal(root.get("propertyName"), value);
+
+        criteriaQuery.where(predicate);
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+}
+```
+
+In this example:
+
+- `EntityManager` is injected into the `EntityService`.
+- `CriteriaBuilder` is obtained from the `EntityManager`.
+- `CriteriaQuery<Entity>` is created for the `Entity` class.
+- `Root<Entity>` represents the root of the query, starting from the `Entity` class.
+- `Predicate` is created to define the condition (e.g., equality).
+- The `where` clause is added to the `CriteriaQuery` using the created `Predicate`.
+- The final query is executed using `entityManager.createQuery(criteriaQuery).getResultList()`.
+
+This approach allows you to dynamically build queries based on conditions. Note that using Spring Data JPA repositories is often more convenient, but if you have specific requirements for dynamic query construction, using the `EntityManager` and Criteria API directly can provide more flexibility.
+==============================================

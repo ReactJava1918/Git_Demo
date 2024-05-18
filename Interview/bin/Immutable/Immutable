@@ -1,0 +1,2 @@
+--All immmutable objects are thread safe
+--Clonning can't break immutable nature

@@ -1,0 +1,42 @@
+Foorkjoinpool by default used by completable future.
+To Make completable future more robust and more stornger 
+we can  pass executor service threads.
+
+
+Below are the differnces between executorservice and foorkjoinpool
+
+Certainly, let's distill the information into three lines for each:
+
+### ForkJoinPool:
+
+1. **Design Focus:**
+   - ForkJoinPool is designed for parallelizing divide-and-conquer algorithms, optimizing tasks that can be split into smaller subtasks, executed independently, and then combined.
+
+2. **Work-Stealing Algorithm:**
+   - ForkJoinPool uses a work-stealing algorithm, where idle threads steal tasks from the queues of other busy threads, providing efficient handling of tasks with varying computation loads.
+
+3. **Task Support:**
+   - It supports tasks that can be forked into subtasks and later joined to produce a result, offering specialized classes like `RecursiveTask` and `RecursiveAction` for different types of tasks.
+
+### ExecutorService:
+
+1. **General-Purpose Framework:**
+   - ExecutorService is a general-purpose framework for managing and executing tasks concurrently, providing more configurability with options for creating fixed-size, cached, or single-threaded thread pools.
+
+2. **Task Submission:**
+   - It accepts tasks in the form of `Callable` or `Runnable`, allowing Callable tasks to return results while Runnable tasks cannot. It's not tied to a specific paradigm like divide-and-conquer.
+
+3. **Versatility:**
+   - ExecutorService is versatile, suitable for a wide range of concurrent programming tasks beyond divide-and-conquer scenarios, offering flexibility in thread pool configuration.
+
+### Choosing Between Them:
+
+1. **ForkJoinPool Selection:**
+   - Choose ForkJoinPool when dealing with tasks naturally dividable into smaller, independent subtasks with a need for work-stealing and task joining.
+
+2. **ExecutorService Selection:**
+   - Choose ExecutorService when you need more control over thread pool configuration, or when your tasks don't fit the divide-and-conquer paradigm, offering versatility for general-purpose use.
+
+3. **General-Purpose Use:**
+   - For many general-purpose use cases, especially those involving simple tasks or I/O-bound operations, ExecutorService is often preferred, offering a pragmatic solution for concurrency.
+

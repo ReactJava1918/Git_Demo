@@ -1,0 +1,13 @@
+
+public class ChildClass extends Super {
+	
+	
+	ChildClass()
+	{
+		
+		
+		System.out.println("constructor from child class");
+		
+	}
+
+}

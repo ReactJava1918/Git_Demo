@@ -1,0 +1,9 @@
+In Java versions prior to Java 8, the Permanent Generation (PermGen) is a distinct area within the Java heap. More specifically, PermGen is a part of the overall heap, and it is used to store class metadata, interned strings, and other JVM-specific data.
+
+So, to clarify:
+
+- **PermGen is part of the heap.**
+- **It is separate from the main areas of the heap like the Young Generation and the Old Generation.**
+- **The PermGen space is used for storing non-heap memory information related to classes, methods, and other JVM metadata.**
+
+However, starting from Java 8, PermGen was replaced by Metaspace. Metaspace is not part of the heap; instead, it is native memory managed by the operating system. This change was introduced to address limitations and issues associated with PermGen, such as fixed size and OutOfMemory errors.

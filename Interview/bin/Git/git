@@ -1,0 +1,4 @@
+Use git pull when you want to quickly update your local branch with changes from the remote, and you are not concerned about having a linear history.
+Use git fetch to inspect changes before deciding to merge or rebase. It allows you to update remote tracking branches without immediately merging.
+Use git merge for a straightforward combination of changes, resulting in a new commit capturing the merged state.
+Use git rebase for creating a clean, linear history by transplanting your changes onto a new base commit.

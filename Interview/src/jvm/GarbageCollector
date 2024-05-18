@@ -1,0 +1,64 @@
+ava 8 continues to use different garbage collection algorithms, 
+including the Garbage-First Garbage Collector (G1 GC), 
+Parallel Collector, and 
+Concurrent Mark-Sweep (CMS) Collector.
+The default garbage collector in Java 8 is the Parallel Collector.
+
+
+we can insisst jvm to use paticular garrabage collector alogithem by following ways
+
+java -XX:+UseG1GC -jar YourApplication.jar
+java -XX:+UseG1GC -jar YourApplication.jar
+java -XX:+UseConcMarkSweepGC -jar YourApplication.jar
+==================================================================================================================
+
+
+ThroughPut:-
+ThroughPut is nothing but amount of time taken to process the data.
+Latency:-
+Latency is amount of time taken to tranfer data fom one system to another syatem
+
+
+===================================================================================
+Mark-sweep:-
+===============
+When applications runs, if it fells collets the garbbage , it stops the application marks the unused objects and collects
+.This is depricated from java 9
+
+
+Let's simplify the concepts:
+
+### Parallel Collector:
+
+- **Job:** Cleans up garbage in your program's memory.
+
+- **Approach:** 
+  - Divides memory into two parts: young and old.
+  - Uses multiple threads to clean up garbage simultaneously, aiming for high throughput.
+
+- **Pause Times:** 
+  - During cleanup, it may briefly pause your program's threads (stop-the-world events).
+  - Best for applications where occasional short pauses are acceptable for overall high performance.
+
+### G1 Garbage Collector (G1GC):
+
+- **Job:** Also cleans up garbage but with a focus on predictability.
+
+- **Approach:**
+  - Divides memory into smaller regions, not strictly young and old.
+  - Prioritizes cleaning the regions with the most garbage first (garbage-first approach).
+  - Uses incremental and concurrent phases to minimize stop-the-world pauses.
+
+- **Pause Times:**
+  - Aims for more predictable and shorter pauses compared to the Parallel Collector.
+  - Suitable for applications with low-latency requirements, where consistent response times are crucial.
+
+**In a nutshell:**
+- If your application values high throughput and can tolerate occasional short pauses, go with the Parallel Collector.
+- If your application prioritizes consistent response times and aims for shorter, more predictable pauses, consider G1 Garbage Collector.
+
+Feel free to ask if you have more specific questions or if there's anything else you'd like to understand!
+ 
+
+
+

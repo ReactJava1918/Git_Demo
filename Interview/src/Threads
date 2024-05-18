@@ -1,0 +1,8 @@
+=====================================
+9)Internal thread communication
+10)Deadlock:-In synchronised case if there is no proper coummnication between two threads than deadlocks occurs,Dead lock means keep on waiting state
+11)Race condition:-If mutiple threads trying resource and results are not constient
+15)Join methos use case in thread
+16)Synchronised,block level, method level
+17)18)wait(),notify(),notyfyAll() 
+18)Thread will accept only runnable and future objects---see i have done one example on this (ExampleOnCallable)

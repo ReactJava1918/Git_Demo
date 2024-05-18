@@ -1,0 +1,11 @@
+
+public class CovrirentReturnType {
+	//int,float,double,byte,short,long
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

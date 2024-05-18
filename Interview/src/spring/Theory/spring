@@ -1,0 +1,145 @@
+What is IOC
+==============
+IOC is nothing but inversion of control, where control moved to framework or container for
+mainging  and creating dependencies to achive loose coupling and modulartey in application.
+
+what is DepenceyInjection
+=========================
+Dependenction injection nothing but implementation of ioc, i.e we know by using objects are created and manged in factory 
+so dependecey will take the objects factory it will  inject to spring bean
+There are threee types of dependceny injections
+1)setter injetcion
+2)Constructor injection
+3)feild level injection
+
+setter injection happens lazily
+construction injection at the time spring bean intilization
+feild level happens at the time spring bean intilization
+
+Recomded approch is constructor injection, the reason because is if any bean is missed it will right way through exception no bean found exception
+
+Though feild injection also happens in spring bean intlization,if in any case if it find bean was missied during injection
+then it wont throw any exception, just it will only assign  null.
+
+
+setter injection will happen after bean creation done successfully
+
+
+what is Autowired
+=====================
+Autowired is the future of spring framework.
+Depencey injection can we achived by using Autowired future provided by spring boot.
+There are two types of autowired,
+1)by name
+2)by Type
+
+spring boot by deafuilt usess by type.
+
+if there are mutiple beans of same type , then we need to use  @qulaifier to remove amibiguitey between beans
+.so we can  say using @qualifier between beans is nothing but we are autowiring by name .
+
+
+
+--Differnce between @Primary @Qualifier
+==========================================
+--How to fix circular dependency injection?
+Setter Injection along with @lazy  will only fix circular dependecy injection
+
+what actually happens when you use @Lazy
+=========================================
+@Component
+public class BeanA {
+    @Autowired
+    @Lazy
+    private BeanB beanB;
+}
+
+@Component
+public class BeanB {
+    @Autowired
+    @Lazy
+    private BeanA beanA;
+}
+
+Here above  beans creation is delayed untill they required actually
+===============================================================
+
+Below is very Import use case Be mindfull
+==============================================
+BeanA-singleton
+BeanB-protype
+if you try to create instance of BeanA.instance of BeanA is stored in cache .
+if you try  create 100 times also same object only will be shared though B is protype.
+
+
+to get 100 differnt objects beanB you have to usee @lookup, so you will be geeting same singleton object and 100 ddiffernt 
+objects for protype 
+=============================================
+scopes of spring Bean
+=====================
+@Qulifier,@Primary
+=====================
+1)SingleTon
+2)PrtoType
+3)session
+4)Request
+5)Application
+6)websocket
+========================
+Spring Life Cycle
+==================
+Annotations 
+===========
+put,patch,post,delete,get
+====================
+differnce between pathvariable,requestparam,requestbody,pathparm
+
+
+if don't give pathvarible while requesting it will handle as  in api side if you see below  it is given false
+@GetMapping("/users/{userId}")
+public String getUserById(@PathVariable(required = false) Long userId) {
+    if (userId != null) {
+        // Code to retrieve user by ID
+        return "User details for ID: " + userId;
+    } else {
+        return "User ID is missing";
+    }
+}
+
+if don't give pathvarible while requesting it will won't  handle as  in api side if you see below  it is given true
+@GetMapping("/users/{userId}")
+public String getUserById(@PathVariable(required = true) Long userId) {
+    if (userId != null) {
+        // Code to retrieve user by ID
+        return "User details for ID: " + userId;
+    } else {
+        return "User ID is missing";
+    }
+}
+
+
+Below is wrong because in url it is userId but you are accesing with Id
+
+@GetMapping("/users/{userId}")
+public String getUserById(@PathVariable(required = true) Long Id) {
+    if (userId != null) {
+        // Code to retrieve user by ID
+        return "User details for ID: " + userId;
+    } else {
+        return "User ID is missing";
+    }
+}
+
+
+--@pathvarible is bydefault true
+========================================================================
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;newUser&apos; in &apos;com.codewithsiva.fullstackbackend.controller.UserController.updateRegUsers(...)&apos; to &apos;regUsers&apos;&#x0D;&#x0A;- Original project: &apos;fullstack-backend&apos;&#x0D;&#x0A;- Original element: &apos;com.codewithsiva.fullstackbackend.controller.UserController.updateRegUsers(RegUsers, Long).newUser&apos;&#x0D;&#x0A;- Renamed element: &apos;newUser&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;newUser&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.codewithsiva.fullstackbackend.controller{UserController.java[UserController~updateRegUsers~QRegUsers;~QLong;@newUser!1742!1770!1764!1770!QRegUsers;!0!true" name="regUsers" references="true" stamp="1712391438987" version="1.0"/>
+</session>

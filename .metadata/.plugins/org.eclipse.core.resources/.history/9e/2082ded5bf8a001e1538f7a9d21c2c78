@@ -1,0 +1,45 @@
+package com.movie.controller;
+// UserController.java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.movie.custom.exception.InvalidCredentialsException;
+import com.movie.dto.LoginRequest;
+import com.movie.dto.UserDto;
+import com.movie.entity.RegistrationEntity;
+import com.movie.service.UserServiceImpl;
+
+@RestController
+public class UserController {
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+
+    @PostMapping("/login")
+    public UserDto login(@RequestBody LoginRequest loginRequest) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+
+        RegistrationEntity registrationEntity=userServiceImpl.authenticateUser(username, password);
+        	if(registrationEntity==null)
+        	{
+        		throw new InvalidCredentialsException("Not a valid credentials");
+        	}
+        	UserDto userData=getUserData(registrationEntity);
+        	
+        	
+            return userData;
+         
+    }
+
+	private UserDto getUserData(RegistrationEntity registrationEntity) {
+		UserDto userDto = new UserDto();
+		userDto.setUsername(registrationEntity.getUsername());
+		userDto.setImage(registrationEntity.getImage());
+		
+		// TODO Auto-generated method stub
+		return userDto;
+	}
+}
